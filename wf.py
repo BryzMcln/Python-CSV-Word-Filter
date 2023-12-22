@@ -30,13 +30,12 @@ def process_data(dataset, target_words):
 
 
 def plot_bar_chart(new_dataframe):
-    fig, ax = plt.subplots(figsize=(12, 8))
-    sns.barplot(x=new_dataframe["Frequency"], y=new_dataframe["Word"], ax=ax)
-    ax.set_title("Word Frequencies")
-    ax.set_xlabel("Frequency")
-    ax.set_ylabel("Word")
-    mng = plt.get_current_fig_manager()
-    mng.full_screen_toggle()
+    plt.figure(figsize=(12, 8))
+    sns.barplot(x=new_dataframe["Frequency"], y=new_dataframe["Word"])
+    plt.title("Word Frequencies")
+    plt.xlabel("Frequency")
+    plt.ylabel("Word")
+    plt.get_current_fig_manager().window.state("zoomed")  # Maximize the window
     plt.show()
 
 
