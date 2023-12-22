@@ -35,7 +35,8 @@ def plot_bar_chart(new_dataframe):
     plt.title("Word Frequencies")
     plt.xlabel("Frequency")
     plt.ylabel("Word")
-    plt.get_current_fig_manager().window.state("zoomed")  # Maximize the window
+    plt.tick_params(axis="both", which="major", labelsize=12)  # Adjust font size
+    plt.tight_layout()  # Adjust layout
     plt.show()
 
 
