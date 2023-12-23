@@ -43,6 +43,8 @@ stop_words = [
     "that",
     "these",
     "those",
+    "get",
+    "got",
     "am",
     "is",
     "are",
@@ -158,6 +160,8 @@ stop_words = [
     "ung",
     "naman",
     "sya",
+    "siya",
+    "niya",
     "nya",
     "jan",
     "nyan",
@@ -166,6 +170,8 @@ stop_words = [
     "sana",
     "pero",
     "hindi",
+    "ulit",
+    "mga",
     "di",
     "oo",
     "siguro",
@@ -178,6 +184,7 @@ stop_words = [
     "order",  # order
     "quality",  # quality
     "product",  # product
+    "items",
     "item",  # item
     "appearance",  # appearance
     "feature",  # feature
