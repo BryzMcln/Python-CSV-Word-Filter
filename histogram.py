@@ -125,40 +125,76 @@ stop_words = [
     "than",
     "too",
     "very",
-    "s",
-    "t",
     "can",
     "will",
     "just",
     "don",
     "should",
+    "may",
+    "receive",
+    "received",
+    "well",
+    "much",
+    # tagalog
+    "s",
     "now",
-    "d",
-    "ll",
-    "m",
-    "o",
-    "re",
-    "ve",
-    "y",
-    "ain",
-    "aren",
-    "couldn",
-    "didn",
-    "doesn",
-    "hadn",
-    "hasn",
-    "haven",
-    "isn",
-    "ma",
-    "mightn",
-    "mustn",
-    "needn",
-    "shan",
-    "shouldn",
-    "wasn",
-    "weren",
-    "won",
-    "wouldn",
+    "na",
+    "ng",
+    "nang",
+    "sa",
+    "pa",
+    "ba",
+    "po",
+    "mag",
+    "nag",
+    "pag",
+    "lang",
+    "ang",
+    "ako",
+    "ko",
+    "yung",
+    "naman",
+    "sya",
+    "nya",
+    "jan",
+    "nyan",
+    "din",
+    "pala",
+    "sana",
+    "pero",
+    "hindi",
+    "di",
+    "oo",
+    "siguro",
+    "pwede",
+    "parang",
+    "dumating",
+    "talaga",
+    "10",  # should detect numbers
+    "order",  # order
+    "quality",  # quality
+    "product",  # product
+    "item",  # item
+    "appearance",  # appearance
+    "feature",  # feature
+    "seller",  # seller
+    "shop",  # shop
+    "price",  # price
+    "colour",
+    "color",  # color
+    "delivery",  # delivery
+    "money",  # money
+    "value",  # value
+    "material",  # material
+    "rider",
+    "box",
+    "controller",
+    "shopee",
+    "thanks",
+    "thank",
+    "salamat",  # gratitude
+    "ok",
+    "okay",  # okie
 ]
 
 
