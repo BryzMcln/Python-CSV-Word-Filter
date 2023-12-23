@@ -187,19 +187,21 @@ stop_words = [
     "colour",
     "color",  # color
     "delivery",  # delivery
+    "shipping",  # shipping
     "money",  # money
     "value",  # value
     "material",  # material
     "performance",  # performance
     "rider",  # rider
     "box",  # box
+    "packaging",
+    "packed",
     "controller",  # controller
     "keyboard",  # keyboard
     "mouse",  # mouse
     "time",  # time
     "shopee",
 ]
-
 
 # combine count same word meaning
 same_value = {
@@ -213,7 +215,9 @@ same_value = {
 
 def proecessing_each_and_every_txt(comment):
     words = re.findall(r"\b[^\d\W_]+\b", comment.lower())  # Exclude all single letters
-    return [same_value.get(w, w) for w in words if w not in stop_words and len(w) > 1]
+    return [
+        same_value.get(w, w) for w in words if w not in stop_words and len(w) > 1
+    ]  # count the same value
 
 
 def histogram(dataset, word_count=15):
@@ -239,4 +243,4 @@ if __name__ == "__main__":
     dataset = pd.read_csv("data.csv", encoding="utf-8")
 
     # histogram parameter
-    histogram(dataset, word_count=25)
+    histogram(dataset, word_count=30)
