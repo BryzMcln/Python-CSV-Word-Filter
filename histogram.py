@@ -131,13 +131,13 @@ stop_words = [
     "don",
     "should",
     "may",
-    "s",
     "now",
     "receive",
     "received",
     "well",
     "much",
     "buy",
+    "also",
     # tagalog
     "bili",
     "na",
@@ -169,6 +169,8 @@ stop_words = [
     "di",
     "oo",
     "siguro",
+    "kasi",
+    "dahil",
     "pwede",
     "parang",
     "dumating",
@@ -192,28 +194,32 @@ stop_words = [
     "rider",  # rider
     "box",  # box
     "controller",  # controller
+    "keyboard",  # keyboard
+    "mouse",  # mouse
+    "time",  # time
     "shopee",
 ]
 
 
-# Mapping for variations to combine
+# combine count same word meaning
 same_value = {
     "thank": "thanks",
+    "good": "goods",
     "ok": "okay",
+    "maganda": "ganda",
+    "working": "works",
 }
 
 
-def txt_process(comment):
-    words = re.findall(r"\b[^\d\W]+\b", comment.lower())
-    # Apply variation mapping
-    words = [same_value.get(word, word) for word in words]
-    return [w for w in words if w not in stop_words]
+def preprocess_text(comment):
+    words = re.findall(r"\b[^\d\W_]+\b", comment.lower())  # Exclude single letters
+    return [same_value.get(w, w) for w in words if w not in stop_words and len(w) > 1]
 
 
 def histogram(dataset, word_count=15):
     all_words = []
     for index, data in dataset.iterrows():
-        words = txt_process(str(data["comment"]))
+        words = preprocess_text(str(data["comment"]))
         all_words.extend(words)
 
     word_freq = FreqDist(all_words)
@@ -232,5 +238,5 @@ if __name__ == "__main__":
     # Load dataset
     dataset = pd.read_csv("data.csv", encoding="utf-8")
 
-    # Plot word histogram
-    histogram(dataset, word_count=15)
+    # histogram parameter
+    histogram(dataset, word_count=25)
