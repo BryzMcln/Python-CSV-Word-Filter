@@ -18,9 +18,10 @@ tagalog_stop_words = [
     "may", "also", "got",
 ]
 
+# Words that unecessary
 unecessary_words = [
-    "quality", "shopee", "order", "seller", "shop",   "colour", "color", "items", "item",
-    "delivery", "shipping",  "money",  "material",   "rider", "box", "packaging", "packed",
+    "shopee", "order", "seller", "shop",   "colour", "color", "items", "item",
+    "delivery", "shipping",  "money",  "material", "rider", "box", "packaging", "packed",
 ]
 stop_words.update(tagalog_stop_words, unecessary_words)
 
