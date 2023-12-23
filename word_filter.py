@@ -1,193 +1,84 @@
 import pandas as pd
-import re
 from nltk.probability import FreqDist
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-# List of common English stop words
-stop_words = [
-    "i",
-    "me",
-    "my",
-    "myself",
-    "we",
-    "our",
-    "ours",
-    "ourselves",
-    "you",
-    "your",
-    "yours",
-    "yourself",
-    "yourselves",
-    "he",
-    "him",
-    "his",
-    "himself",
-    "she",
-    "her",
-    "hers",
-    "herself",
-    "it",
-    "its",
-    "itself",
-    "they",
-    "them",
-    "their",
-    "theirs",
-    "themselves",
-    "what",
-    "which",
-    "who",
-    "whom",
-    "this",
-    "that",
-    "these",
-    "those",
-    "am",
-    "is",
-    "are",
-    "was",
-    "were",
-    "be",
-    "been",
-    "being",
-    "have",
-    "has",
-    "had",
-    "having",
-    "do",
-    "does",
-    "did",
-    "doing",
-    "a",
-    "an",
-    "the",
-    "and",
-    "but",
-    "if",
-    "or",
-    "because",
-    "as",
-    "until",
-    "while",
-    "of",
-    "at",
-    "by",
-    "for",
-    "with",
-    "about",
-    "against",
-    "between",
-    "into",
-    "through",
-    "during",
-    "before",
-    "after",
-    "above",
-    "below",
-    "to",
-    "from",
-    "up",
-    "down",
-    "in",
-    "out",
-    "on",
-    "off",
-    "over",
-    "under",
-    "again",
-    "further",
-    "then",
-    "once",
-    "here",
-    "there",
-    "when",
-    "where",
-    "why",
-    "how",
-    "all",
-    "any",
-    "both",
-    "each",
-    "few",
-    "more",
-    "most",
-    "other",
-    "some",
-    "such",
-    "no",
-    "nor",
-    "not",
-    "only",
-    "own",
-    "same",
-    "so",
-    "than",
-    "too",
-    "very",
-    "s",
-    "t",
-    "can",
-    "will",
-    "just",
-    "don",
-    "should",
-    "now",
-    "d",
-    "ll",
-    "m",
-    "o",
-    "re",
-    "ve",
-    "y",
-    "ain",
-    "aren",
-    "couldn",
-    "didn",
-    "doesn",
-    "hadn",
-    "hasn",
-    "haven",
-    "isn",
-    "ma",
-    "mightn",
-    "mustn",
-    "needn",
-    "shan",
-    "shouldn",
-    "wasn",
-    "weren",
-    "won",
-    "wouldn",
-]
+
+def read_data(file_path):
+    try:
+        dataset = pd.read_csv(file_path, encoding="utf-8")
+        return dataset
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        return None
 
 
-def preprocess_text(comment):
-    words = re.findall(r"\b\w+\b", comment.lower())
-    return [w for w in words if w not in stop_words]
+def process_data(dataset, target_words):
+    dataset["combined_text"] = (
+        dataset[["comment", "rating_star", "itemid"]].astype(str).agg(" ".join, axis=1)
+    )
 
+    word_freq = {word: 0 for word in target_words}
 
-def plot_word_histogram(dataset, word_count=15):
-    all_words = []
     for index, data in dataset.iterrows():
-        words = preprocess_text(str(data["comment"]))
-        all_words.extend(words)
+        comment = str(data["combined_text"]).lower()
+        for word in target_words:
+            if word in comment:
+                word_freq[word] += 1
 
-    word_freq = FreqDist(all_words)
-    top_words = word_freq.most_common(word_count)
-    top_words_df = pd.DataFrame(top_words, columns=["Word", "Frequency"])
+    return pd.DataFrame(list(word_freq.items()), columns=["Word", "Frequency"])
 
+
+def plot_bar_chart(new_dataframe):
     plt.figure(figsize=(12, 8))
-    sns.barplot(x="Frequency", y="Word", data=top_words_df)
-    plt.title("Most Common Words in Gaming Product Comments")
+    sns.barplot(x=new_dataframe["Frequency"], y=new_dataframe["Word"])
+    plt.title("Word Frequencies")
     plt.xlabel("Frequency")
     plt.ylabel("Word")
+    plt.tick_params(axis="both", which="major", labelsize=12)  # Adjust font size
+    plt.tight_layout()  # Adjust layout
     plt.show()
 
 
 if __name__ == "__main__":
-    # Load dataset
-    dataset = pd.read_csv("data.csv", encoding="utf-8")
+    file_path = "data.csv"
+    target_words = [
+        "thanks",
+        "thank",
+        "good",
+        "ok",
+        "okay",
+        "nice",
+        "cheap",
+        "satisfied",
+        "simple",
+        "well",
+        "easy",
+        "work",
+        "better",
+        "best",
+        "great",
+        "fast",
+        "superb",
+        "quick",
+        "cool",
+        "love",
+        "like",
+        "pretty",
+        "cute",
+        "excellent",
+        "very",
+        "worth",
+        "super",
+        "perfect",
+        "sakto",
+        "sulit",
+        "medyo",
+        "maganda",
+    ]
 
-    # Plot word histogram
-    plot_word_histogram(dataset, word_count=15)
+    dataset = read_data(file_path)
+
+    if dataset is not None:
+        new_dataframe = process_data(dataset, target_words)
+        plot_bar_chart(new_dataframe)
