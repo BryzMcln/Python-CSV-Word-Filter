@@ -6,6 +6,7 @@ import seaborn as sns
 
 # List of common English stop words
 stop_words = [
+    # english
     "i",
     "me",
     "my",
@@ -24,8 +25,7 @@ stop_words = [
     "his",
     "himself",
     "she",
-    "her",
-    "hers",
+    "her" "hers",
     "herself",
     "it",
     "its",
@@ -62,7 +62,6 @@ stop_words = [
     "does",
     "did",
     "doing",
-    "a",
     "an",
     "the",
     "and",
@@ -188,6 +187,7 @@ stop_words = [
     "lng",
     "para",
     "talaga",
+    "shopee",
     "order",  # order
     "quality",  # quality
     "product",  # product
@@ -210,11 +210,7 @@ stop_words = [
     "box",  # box
     "packaging",
     "packed",
-    "controller",  # controller
-    "keyboard",  # keyboard
-    "mouse",  # mouse
     "time",  # time
-    "shopee",
 ]
 
 # combine count same word meaning
@@ -228,10 +224,14 @@ same_value = {
 
 
 def proecessing_each_and_every_txt(comment):
-    words = re.findall(r"\b[^\d\W_]+\b", comment.lower())  # Exclude all single letters
+    # Exclude all single letters a, b, c ...
+    words = re.findall(r"\b[^\d\W_]+\b", comment.lower())
     return [
-        same_value.get(w, w) for w in words if w not in stop_words and len(w) > 1
-    ]  # count the same value
+        # count the same value
+        same_value.get(w, w)
+        for w in words
+        if w not in stop_words and len(w) > 1
+    ]
 
 
 def histogram(dataset, word_count=15):
@@ -248,13 +248,13 @@ def histogram(dataset, word_count=15):
     sns.barplot(x="Frequency", y="Word", data=top_words_df)
     plt.title("Most Common Words in Gaming Product Comments")
     plt.xlabel("Frequency")
-    plt.ylabel("Word")
+    plt.ylabel("Words Used")
     plt.show()
 
 
 if __name__ == "__main__":
-    # Load dataset
+    # Load csv file
     dataset = pd.read_csv("data.csv", encoding="utf-8")
 
     # histogram parameter
-    histogram(dataset, word_count=20)
+    histogram(dataset, word_count=20)  # top 20 words
