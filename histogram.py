@@ -131,13 +131,15 @@ stop_words = [
     "don",
     "should",
     "may",
+    "s",
+    "now",
     "receive",
     "received",
     "well",
     "much",
+    "buy",
     # tagalog
-    "s",
-    "now",
+    "bili",
     "na",
     "ng",
     "nang",
@@ -153,6 +155,7 @@ stop_words = [
     "ako",
     "ko",
     "yung",
+    "ung",
     "naman",
     "sya",
     "nya",
@@ -170,7 +173,6 @@ stop_words = [
     "parang",
     "dumating",
     "talaga",
-    "10",  # should detect numbers
     "order",  # order
     "quality",  # quality
     "product",  # product
@@ -186,34 +188,39 @@ stop_words = [
     "money",  # money
     "value",  # value
     "material",  # material
-    "rider",
-    "box",
-    "controller",
+    "performance",  # performance
+    "rider",  # rider
+    "box",  # box
+    "controller",  # controller
     "shopee",
-    "thanks",
-    "thank",
-    "salamat",  # gratitude
-    "ok",
-    "okay",  # okie
 ]
 
 
-def preprocess_text(comment):
-    words = re.findall(r"\b\w+\b", comment.lower())
+# Mapping for variations to combine
+same_value = {
+    "thank": "thanks",
+    "ok": "okay",
+}
+
+
+def txt_process(comment):
+    words = re.findall(r"\b[^\d\W]+\b", comment.lower())
+    # Apply variation mapping
+    words = [same_value.get(word, word) for word in words]
     return [w for w in words if w not in stop_words]
 
 
-def plot_word_histogram(dataset, word_count=15):
+def histogram(dataset, word_count=15):
     all_words = []
     for index, data in dataset.iterrows():
-        words = preprocess_text(str(data["comment"]))
+        words = txt_process(str(data["comment"]))
         all_words.extend(words)
 
     word_freq = FreqDist(all_words)
     top_words = word_freq.most_common(word_count)
     top_words_df = pd.DataFrame(top_words, columns=["Word", "Frequency"])
 
-    plt.figure(figsize=(12, 8))
+    plt.figure(figsize=(15, 9))
     sns.barplot(x="Frequency", y="Word", data=top_words_df)
     plt.title("Most Common Words in Gaming Product Comments")
     plt.xlabel("Frequency")
@@ -226,4 +233,4 @@ if __name__ == "__main__":
     dataset = pd.read_csv("data.csv", encoding="utf-8")
 
     # Plot word histogram
-    plot_word_histogram(dataset, word_count=15)
+    histogram(dataset, word_count=15)
