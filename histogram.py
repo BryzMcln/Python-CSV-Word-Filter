@@ -257,4 +257,4 @@ if __name__ == "__main__":
     dataset = pd.read_csv("data.csv", encoding="utf-8")
 
     # histogram parameter
-    histogram(dataset, word_count=20)  # top 20 words
+    histogram(dataset, word_count=40)  # top 20 words
