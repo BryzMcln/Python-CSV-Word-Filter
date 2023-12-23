@@ -211,15 +211,15 @@ same_value = {
 }
 
 
-def preprocess_text(comment):
-    words = re.findall(r"\b[^\d\W_]+\b", comment.lower())  # Exclude single letters
+def proecessing_each_and_every_txt(comment):
+    words = re.findall(r"\b[^\d\W_]+\b", comment.lower())  # Exclude all single letters
     return [same_value.get(w, w) for w in words if w not in stop_words and len(w) > 1]
 
 
 def histogram(dataset, word_count=15):
     all_words = []
     for index, data in dataset.iterrows():
-        words = preprocess_text(str(data["comment"]))
+        words = proecessing_each_and_every_txt(str(data["comment"]))
         all_words.extend(words)
 
     word_freq = FreqDist(all_words)
