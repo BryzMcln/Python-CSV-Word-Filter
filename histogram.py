@@ -57,6 +57,7 @@ stop_words = [
     "has",
     "had",
     "having",
+    "really",
     "do",
     "does",
     "did",
@@ -166,6 +167,10 @@ stop_words = [
     "jan",
     "nyan",
     "din",
+    "rin",
+    "lahat",
+    "kaya",
+    "ito",
     "pala",
     "sana",
     "pero",
@@ -180,6 +185,8 @@ stop_words = [
     "pwede",
     "parang",
     "dumating",
+    "lng",
+    "para",
     "talaga",
     "order",  # order
     "quality",  # quality
@@ -250,4 +257,4 @@ if __name__ == "__main__":
     dataset = pd.read_csv("data.csv", encoding="utf-8")
 
     # histogram parameter
-    histogram(dataset, word_count=30)
+    histogram(dataset, word_count=20)
